@@ -16,7 +16,6 @@ try:
 except FileNotFoundError:
     gastos = []
 except json.JSONDecodeError:
-    print("O arquivo JSON contém dados inválidos")
     gastos = []
 
 
