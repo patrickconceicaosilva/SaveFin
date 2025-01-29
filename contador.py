@@ -13,5 +13,5 @@ total = 0
 
 for produto in gastos:
     total += float(produto["valor"])
-
-print(f"O total gasto foi {total}")
+    
+print(f"O total gasto foi R${total:,.2f}")
