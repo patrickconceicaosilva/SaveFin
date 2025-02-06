@@ -63,10 +63,10 @@ idiomaVar.set("English")
 frame = customtkinter.CTkFrame(window, bg_color="black")
 frame.pack(expand=True)
 
-registro_produto = customtkinter.CTkEntry(frame, width=250, placeholder_text="Produto", font=("Arial", 25))
+registro_produto = customtkinter.CTkEntry(frame, width=250, placeholder_text="Product", font=("Arial", 25))
 registro_produto.pack(padx=35, pady=35)
 
-registro_valor = customtkinter.CTkEntry(frame, width=250, placeholder_text="Valor", font=("Arial", 25))
+registro_valor = customtkinter.CTkEntry(frame, width=250, placeholder_text="Price", font=("Arial", 25))
 registro_valor.pack(padx=35, pady=35)
 
 botao_submit = customtkinter.CTkButton(frame, width=125, height=35, text="Submit", command=getInput, font=("Arial", 25))
