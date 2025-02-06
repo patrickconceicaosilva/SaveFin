@@ -1,5 +1,8 @@
-import tkinter
+import customtkinter
 import json
+
+customtkinter.set_appearance_mode("dark")
+customtkinter.set_default_color_theme("dark-blue")
 
 # Função para obter texto do Entry (Input)
 
@@ -30,52 +33,56 @@ def getInput():
     with open(arquivo_JSON, "w") as arquivo:
         json.dump(gastos, arquivo, indent=4)
 
-    registro_produto.delete(0, tkinter.END)
-    registro_valor.delete(0, tkinter.END)
+    registro_produto.delete(0, customtkinter.END)
+    registro_valor.delete(0, customtkinter.END)
     registro_produto.focus_set()
 
     print(f"Produto salvo em {arquivo_JSON}")
 
-def mudarIdioma():
-    idioma = idiomaVar.get()
+#Temporarily disabled
 
-    if idioma == "Português":
-        label_produto.config(text="Produto")
-        label_valor.config(text="Valor")
-        botao_submit.config(text="Enviar")
-    else:
-        label_produto.config(text="Product")
-        label_valor.config(text="Price")
-        botao_submit.config(text="Submit")
+# def mudarIdioma():
+#     idioma = idiomaVar.get()
+
+#     if idioma == "Português":
+#         botao_submit.configure(text="Enviar")
+#     elif idioma == "English":
+#         botao_submit.configure(text="Submit")
     
 #Janela Tkinter
 
-window = tkinter.Tk()
+window = customtkinter.CTk()
 
 window.geometry("400x500")
 window.resizable(width = False, height= False)
 window.title("SaveFin")
 
-idiomaVar = tkinter.StringVar()
+idiomaVar = customtkinter.StringVar()
 idiomaVar.set("English")
 
-frame = tkinter.Frame(window)
+frame = customtkinter.CTkFrame(window, bg_color="black")
 frame.pack(expand=True)
 
-label_produto = tkinter.Label(frame, text="Product", font=("Arial", 15))
-label_produto.pack(pady=20)
-registro_produto = tkinter.Entry(frame, font=("Arial", 15))
-registro_produto.pack()
+registro_produto = customtkinter.CTkEntry(frame, width=250, placeholder_text="Produto", font=("Arial", 25))
+registro_produto.pack(padx=35, pady=35)
 
-label_valor = tkinter.Label(frame, text="Price", font=("Arial", 15))
-label_valor.pack(pady=20)
-registro_valor = tkinter.Entry(frame, font=("Arial", 15))
-registro_valor.pack()
+registro_valor = customtkinter.CTkEntry(frame, width=250, placeholder_text="Valor", font=("Arial", 25))
+registro_valor.pack(padx=35, pady=35)
 
-botao_submit = tkinter.Button(frame, text="Submit", command=getInput, font=("Arial", 15))
-botao_submit.pack(pady=20)
+botao_submit = customtkinter.CTkButton(frame, width=125, height=35, text="Submit", command=getInput, font=("Arial", 25))
+botao_submit.pack(padx=35, pady=35)
 
-dropDownIdioma = tkinter.OptionMenu(window, idiomaVar, "English", "Português", command=lambda _: mudarIdioma())
-dropDownIdioma.pack()
+#Temporarily disabled
+
+#Language Selector
+
+# dropDownIdioma = customtkinter.CTkOptionMenu(
+#     window,
+#     variable=idiomaVar,
+#     values=["English", "Português"],
+#     command=lambda:mudarIdioma(),
+#     font=("Arial", 15)
+# )
+# dropDownIdioma.pack(padx=35, pady=25)
 
 window.mainloop()
