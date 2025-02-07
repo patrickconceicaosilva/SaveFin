@@ -5,7 +5,7 @@ Simple tool to help you manage your monthly expenses
 
 ### Install Dependencies
 ```
-sudo apt install python3-tk && sudo apt install python3-ttkthemes
+sudo pip3 install customtkinter --break-system-packages
 ```
 
-![image](https://github.com/user-attachments/assets/f7813d96-10ae-47dd-b6cb-26171d99edad)
+![image](https://github.com/user-attachments/assets/327086ec-6e60-4fc5-ad95-3782440bd8be)
