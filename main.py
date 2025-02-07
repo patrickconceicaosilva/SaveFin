@@ -1,8 +1,13 @@
+import sqlite3
 import customtkinter
 import json
 
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("dark-blue")
+
+banco = sqlite3.connect("gastos.db")
+cursor = banco.cursor()
+cursor.execute("CREATE TABLE IF NOT EXISTS gastos(id INTEGER PRIMARY KEY AUTOINCREMENT, produto TEXT NOT NULL, valor REAL NOT NULL)")
 
 # Função para obter texto do Entry (Input)
 
@@ -11,33 +16,22 @@ def getInput():
     if registro_produto.get().strip() == "" or registro_valor.get().strip() == "":
         return
 
-    nomeProduto = registro_produto.get()
-    valorProduto = registro_valor.get()
+    nomeProduto = str(registro_produto.get())
 
-    produtos = {}
-    produtos["produto"] = nomeProduto
-    produtos["valor"] = valorProduto
-
-    arquivo_JSON = "Gastos.json"
-    
     try:
-        with open(arquivo_JSON, "r") as arquivo:
-            gastos = json.load(arquivo)
-    except FileNotFoundError:
-        gastos = []
-    except json.JSONDecodeError:
-        gastos = []
+        valorProduto = float(registro_valor.get())
+    except ValueError:
+        print("O valor inserido é inválido")
+        return
 
-    gastos.append(produtos)
-
-    with open(arquivo_JSON, "w") as arquivo:
-        json.dump(gastos, arquivo, indent=4)
+    cursor.execute("INSERT INTO gastos(produto, valor) VALUES(?, ?)", (nomeProduto, valorProduto))
+    banco.commit()
 
     registro_produto.delete(0, customtkinter.END)
     registro_valor.delete(0, customtkinter.END)
     registro_produto.focus_set()
 
-    print(f"Produto salvo em {arquivo_JSON}")
+    print(f"Produto salvo")
 
 #Temporarily disabled
 
