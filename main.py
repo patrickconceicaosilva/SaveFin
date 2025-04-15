@@ -23,7 +23,7 @@ def getInput():
         print("O valor inserido é inválido")
         return
 
-    cursor.execute("INSERT INTO gastos(produto, valor) VALUES(?, ?)", (nomeProduto, valorProduto))
+    cursor.execute("INSERT INTO gastos(produto, valor) VALUES(?, ?)", (nomeProduto.capitalize(), valorProduto))
     banco.commit()
 
     registro_produto.delete(0, customtkinter.END)
@@ -32,16 +32,29 @@ def getInput():
 
     print(f"Produto salvo")
 
-#Temporarily disabled
+def mostrar_gastos():
+    janela_gastos = customtkinter.CTkToplevel(window)
+    janela_gastos.geometry("400x400")
+    janela_gastos.title("Expenses")
 
-# def mudarIdioma():
-#     idioma = idiomaVar.get()
+    cursor.execute("SELECT produto, valor FROM gastos")
+    resultados = cursor.fetchall()
+    total = sum(valor for _, valor in resultados)
 
-#     if idioma == "Português":
-#         botao_submit.configure(text="Enviar")
-#     elif idioma == "English":
-#         botao_submit.configure(text="Submit")
-    
+    texto_gastos = customtkinter.CTkTextbox(janela_gastos, width=350, height=300, font=("Arial", 22))
+    texto_gastos.pack(padx=10, pady=10)
+
+    texto_total = customtkinter.CTkLabel(janela_gastos, width=350, height=350, text=f"Total: R$ {total}", font=("Arial", 25))
+    texto_total.pack(padx=10, pady=10)
+
+    if resultados:
+        for produto, valor in resultados:
+            texto_gastos.insert("end", f"{produto} - R$ {valor:.2f}\n")
+    else:
+        texto_gastos.insert("end", "Nenhum Gasto cadastrado")
+
+    texto_gastos.configure(state="disabled")
+
 #Janela Tkinter
 
 window = customtkinter.CTk()
@@ -65,17 +78,7 @@ registro_valor.pack(padx=35, pady=35)
 botao_submit = customtkinter.CTkButton(frame, width=125, height=35, text="Submit", command=getInput, font=("Arial", 25))
 botao_submit.pack(padx=35, pady=35)
 
-#Temporarily disabled
-
-#Language Selector
-
-# dropDownIdioma = customtkinter.CTkOptionMenu(
-#     window,
-#     variable=idiomaVar,
-#     values=["English", "Português"],
-#     command=lambda:mudarIdioma(),
-#     font=("Arial", 15)
-# )
-# dropDownIdioma.pack(padx=35, pady=25)
+botao_gastos = customtkinter.CTkButton(window, width=125, height=35, text="Expenses", command=mostrar_gastos, font=("Arial", 25))
+botao_gastos.pack(padx=35, pady=35)
 
 window.mainloop()
