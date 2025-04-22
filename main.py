@@ -1,10 +1,16 @@
+import os
 import sqlite3
 import customtkinter
 
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("dark-blue")
 
-banco = sqlite3.connect("gastos.db")
+appdata_path = os.path.join(os.getenv("APPDATA"), "SaveFin")
+os.makedirs(appdata_path, exist_ok=True)
+
+db_path = os.path.join(appdata_path, "gastos.db")
+banco = sqlite3.connect(db_path)
+
 cursor = banco.cursor()
 cursor.execute("CREATE TABLE IF NOT EXISTS gastos(id INTEGER PRIMARY KEY AUTOINCREMENT, produto TEXT NOT NULL, valor REAL NOT NULL)")
 
