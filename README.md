@@ -3,6 +3,8 @@
 
 Simple tool to help you manage your monthly expenses
 
+Download the latest version of <b>Savefin</b> from the <a href="https://github.com/patrickconceicaosilva/SaveFin/releases/tag/1.0">Releases</a> page
+
 ### Install Dependencies
 ```
 pip install customtkinter && sudo apt install sqlite3
